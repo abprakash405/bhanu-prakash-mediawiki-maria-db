@@ -91,4 +91,16 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY2:latest
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY2:latest" >> $GITHUB_OUTPUT
 
-
+    - uses: actions/checkout@v2
+    - name: Run kubectl
+      uses: nikosch86/github-action-eks-kubectl@main
+      with:
+        command: "apply deployment.yaml"
+      env:
+        EKS_CLUSTER: bhanu-eks2
+    - name: Run kubectl
+      uses: nikosch86/github-action-eks-kubectl@main
+      with:
+        command: "apply service.yaml"
+      env:
+        EKS_CLUSTER: bhanu-eks2
