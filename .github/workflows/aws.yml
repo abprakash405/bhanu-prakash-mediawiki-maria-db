@@ -64,7 +64,8 @@ jobs:
     - name: AWS CLI Installation 
       id: aws_cli_install
       run: |
-        sudo apt-get update && apt-get install awscli -y
+        sudo apt-get update
+        sudo apt-get install awscli -y
 
     - name: Create AWS Resources using AWS CFT
       id: aws_cft
