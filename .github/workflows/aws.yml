@@ -95,12 +95,12 @@ jobs:
     - name: Run kubectl
       uses: nikosch86/github-action-eks-kubectl@main
       with:
-        command: "apply deployment.yaml"
+        command: "apply -f deployment.yaml"
       env:
         EKS_CLUSTER: bhanu-eks2
     - name: Run kubectl
       uses: nikosch86/github-action-eks-kubectl@main
       with:
-        command: "apply service.yaml"
+        command: "apply -f service.yaml"
       env:
         EKS_CLUSTER: bhanu-eks2
