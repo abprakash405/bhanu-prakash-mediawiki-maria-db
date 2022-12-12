@@ -32,7 +32,7 @@ on:
 
 env:
   AWS_REGION: ap-south-1                      # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY1: bhanu-mariadb-repo         # set this to your Amazon ECR repository name
+  ECR_REPOSITORY1: bhanu-mediawiki-repo       # set this to your Amazon ECR repository name
   ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
   ECS_CLUSTER: MY_ECS_CLUSTER                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
@@ -64,8 +64,8 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
+    - name: Build, tag, and push image to Amazon MEDIAWIKI ECR
+      id: build-image-mediawiki
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
@@ -74,7 +74,20 @@ jobs:
         # push it to ECR so that it can
         # be deployed to ECS.
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY1:$IMAGE_TAG -f Dockerfile-mediawiki .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:latest" >> $GITHUB_OUTPUT
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY1:latest
+        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY1:latest" >> $GITHUB_OUTPUT
+
+    - name: Build, tag, and push image to Amazon mariaDB ECR
+      id: build-image-db
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY2:$IMAGE_TAG -f Dockerfile-mariaDB .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY2:latest
+        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY2:latest" >> $GITHUB_OUTPUT
 
 
