@@ -74,7 +74,7 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY1:$IMAGE_TAG -f Dockerfile-mediawiki .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY1:latest -f Dockerfile-mediawiki .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY1:latest
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY1:latest" >> $GITHUB_OUTPUT
 
@@ -87,7 +87,7 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY2:$IMAGE_TAG -f Dockerfile-mariaDB .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY2:latest -f Dockerfile-mariaDB .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY2:latest
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY2:latest" >> $GITHUB_OUTPUT
 
