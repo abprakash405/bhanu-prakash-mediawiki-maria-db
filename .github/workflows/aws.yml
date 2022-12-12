@@ -117,3 +117,21 @@ jobs:
         command: "apply -f service.yaml"
       env:
         EKS_CLUSTER: bhanu-eks2
+    - name: Run kubectl
+      uses: nikosch86/github-action-eks-kubectl@main
+      with:
+        command: "create namespace replicas-ns"
+      env:
+        EKS_CLUSTER: bhanu-eks2
+    - name: Run kubectl
+      uses: nikosch86/github-action-eks-kubectl@main
+      with:
+        command: "kubectl create configmap sample_csv_file --from-file=samplecsv.csv -n replicas-ns"
+      env:
+        EKS_CLUSTER: bhanu-eks2
+    - name: Run kubectl
+      uses: nikosch86/github-action-eks-kubectl@main
+      with:
+        command: "apply -f replica-3pods-deployment.yaml -n replicas-ns"
+      env:
+        EKS_CLUSTER: bhanu-eks2
