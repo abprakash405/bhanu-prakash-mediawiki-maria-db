@@ -29,10 +29,15 @@ spec:
         name: mediawiki
         ports:
         - containerPort: 80
-        resources: {}
+        volumeMounts:
+          - name: mnt
+            mountPath: /var/www/html/mediawiki/docs/
       restartPolicy: Always
       serviceAccountName: ""
-      volumes: null
+      volumes:
+        - name: mnt
+          configMap:
+            name: sample_csv_file
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -64,10 +69,15 @@ spec:
         name: mediawiki
         ports:
         - containerPort: 80
-        resources: {}
+        volumeMounts:
+          - name: mnt
+            mountPath: /var/www/html/mediawiki/docs/
       restartPolicy: Always
       serviceAccountName: ""
-      volumes: null
+      volumes:
+        - name: mnt
+          configMap:
+            name: sample_csv_file
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -99,7 +109,12 @@ spec:
         name: mediawiki
         ports:
         - containerPort: 80
-        resources: {}
+        volumeMounts:
+          - name: mnt
+            mountPath: /var/www/html/mediawiki/docs/
       restartPolicy: Always
       serviceAccountName: ""
-      volumes: null
+      volumes:
+        - name: mnt
+          configMap:
+            name: sample_csv_file
