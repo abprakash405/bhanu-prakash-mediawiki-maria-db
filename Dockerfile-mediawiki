@@ -1,0 +1,11 @@
+FROM ubuntu:latest
+
+MAINTAINER Bhanu prakash archepalli
+
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" TZ="America/New_York" apt-get install apt-utils tzdata wget -y
+RUN apt-get install php php-apcu php-intl php-mbstring php-xml php-mysql php-calendar mariadb-server apache2 -y
+
+RUN cd /var/www/html/ && wget https://releases.wikimedia.org/mediawiki/1.39/mediawiki-1.39.0.tar.gz  && tar -xvzf mediawiki-1.39.0.tar.gz && mv mediawiki-1.39.0 mediawiki && rm mediawiki-1.39.0.tar.gz
+
+CMD  [ "/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
