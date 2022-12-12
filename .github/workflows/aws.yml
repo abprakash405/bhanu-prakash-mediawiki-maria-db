@@ -70,9 +70,9 @@ jobs:
     - name: Create AWS Resources using AWS CFT
       id: aws_cft
       run: |
-        #aws cloudformation validate-template --template-body file://AWS-CFT-Infra-provision.yaml --capabilities "CAPABILITY_IAM" 
-        aws cloudformation create-stack --template-body file://AWS-CFT-Infra-provision.yaml --stack-name BHANU-AWS-EKS-ECR
-        #aws cloudformation describe-stack-events --stack-name BHANU-AWS-EKS-ECR --capabilities "CAPABILITY_IAM" >> $GITHUB_OUTPUT
+        
+        aws cloudformation create-stack --template-body file://AWS-CFT-Infra-provision.yaml --stack-name BHANU-AWS-EKS-ECR --capabilities CAPABILITY_NAMED_IAM
+        
 
     - name: Login to Amazon ECR
       id: login-ecr
