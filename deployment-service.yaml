@@ -1,0 +1,123 @@
+apiVersion: v1
+data:
+  MARIADB_USER: example-user
+  MARIADB_DATABASE: my_wiki
+kind: ConfigMap
+metadata:
+  labels:
+    service: db-env
+  name: env
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+data:
+  MARIADB_ROOT_PASSWORD: bXktc2VjcmV0LXB3Cg==
+  MARIADB_PASSWORD: bXlfY29vbF9zZWNyZXQ=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: db
+  name: db
+spec:
+  ports:
+  - name: "33060"
+    port: 33060
+    targetPort: 3306
+  selector:
+    service: db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: mediawiki
+  name: mediawiki
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "8000"
+    port: 8000
+    targetPort: 80
+  selector:
+    service: mediawiki
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: db
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        network/wikinetwork: "true"
+        service: db
+    spec:
+      containers:
+      - env:
+        - name: MARIADB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: MARIADB_DATABASE
+              name: env
+        - name: MARIADB_USER
+          valueFrom:
+            configMapKeyRef:
+              key: MARIADB_USER
+              name: env
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: MARIADB_ROOT_PASSWORD
+        - name: MARIADB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: MARIADB_PASSWORD
+        image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/mariadb:latest
+        imagePullPolicy: Always
+        name: db
+        ports:
+        - containerPort: 3306
+      restartPolicy: Always
+      serviceAccountName: ""
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: mediawiki
+  name: mediawiki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: mediawiki
+  template:
+    metadata:
+      labels:
+        network/wikinetwork: "true"
+        service: mediawiki
+    spec:
+      containers:
+      - image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/mediawiki-2:latest
+        imagePullPolicy: Always
+        name: mediawiki
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
