@@ -72,7 +72,7 @@ jobs:
       run: |
         aws cloudformation validate-template --template-body file://AWS-CFT-Infra-provision.yaml --capabilities CAPABILITY_NAMED_IAM
         aws cloudformation create-stack --template-body file://AWS-CFT-Infra-provision.yaml --stack-name BHANU-AWS-EKS-ECR --capabilities CAPABILITY_NAMED_IAM
-        aws cloudformation describe-stack-events --stack-name BHANU-AWS-EKS-ECR >> $GITHUB_OUTPUT --capabilities CAPABILITY_NAMED_IAM
+        aws cloudformation describe-stack-events --stack-name BHANU-AWS-EKS-ECR --capabilities CAPABILITY_NAMED_IAM >> $GITHUB_OUTPUT
 
     - name: Login to Amazon ECR
       id: login-ecr
