@@ -82,8 +82,8 @@ jobs:
       id: eksctl_create_EKS_ECR
       run: |
         eksctl create cluster --name eks-mediawiki --region ${{ env.AWS_REGION }}
-        aws ecr create-repository --repository-name ${{ ECR_REPOSITORY1 }} --region ${{ env.AWS_REGION }}
-        aws ecr create-repository --repository-name ${{ ECR_REPOSITORY2 }} --region ${{ env.AWS_REGION }}
+        aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY1 }} --region ${{ env.AWS_REGION }}
+        aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY2 }} --region ${{ env.AWS_REGION }}
     
     - name: Wait for 30 minutes to complete AWS CFT
       # You may pin to the exact commit or the version.
