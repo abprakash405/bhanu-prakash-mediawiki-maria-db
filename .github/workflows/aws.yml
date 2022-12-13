@@ -75,9 +75,9 @@ jobs:
     - name: Create EKS ECR
       id: eksctl_create_EKS_ECR
       run: |
-        eksctl create cluster --name ${{ env.EKS_CLUSTER }} --region ${{ env.AWS_REGION }}
-        aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY1 }} --region ${{ env.AWS_REGION }}
-        aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY2 }} --region ${{ env.AWS_REGION }}
+        #eksctl create cluster --name ${{ env.EKS_CLUSTER }} --region ${{ env.AWS_REGION }}
+        #aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY1 }} --region ${{ env.AWS_REGION }}
+        #aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY2 }} --region ${{ env.AWS_REGION }}
     
     #- name: Wait for 30 minutes to complete AWS CFT
       # You may pin to the exact commit or the version.
@@ -129,7 +129,7 @@ jobs:
       with:
         command: "apply -f service.yaml"
       env:
-        EKS_CLUSTER: bhanu-eks2
+        EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
     - name: Run kubectl
       uses: nikosch86/github-action-eks-kubectl@main
       with:
