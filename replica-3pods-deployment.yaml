@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   labels:
     service: mediawiki
-  name: mediawiki_pod_a
+  name: mediawikipoda
 spec:
   replicas: 1
   selector:
@@ -44,7 +44,7 @@ kind: Deployment
 metadata:
   labels:
     service: mediawiki
-  name: mediawiki_pod_b
+  name: mediawikipodb
 spec:
   replicas: 1
   selector:
@@ -84,7 +84,7 @@ kind: Deployment
 metadata:
   labels:
     service: mediawiki
-  name: mediawiki_pod_c
+  name: mediawikipodc
 spec:
   replicas: 1
   selector:
