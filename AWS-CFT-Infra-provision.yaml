@@ -11,23 +11,23 @@ Parameters:
     Default: myeksclusterk
   VpcId:
     Type: String
-    Default: vpc-0f767d0c5f4bd9a3b
+    Default: vpc-073675777e7720d40
     Description: VPCID
   PublicSubnet01:
     Type: String
-    Default: subnet-064b5a8111c4eb138
+    Default: subnet-071e04dabe9d103b7
     Description: public subnet1
   PublicSubnet02:
     Type: String
-    Default: subnet-091ca81b503cf66dc
+    Default: subnet-0a2670afc0870c6c9
     Description: public subnet2
   PrivateSubnet01:
     Type: String
-    Default: subnet-098d5f40e5d86ff3c
+    Default: subnet-0dbc6f3ed73cbec2e
     Description: private subnet1
   PrivateSubnet02:
     Type: String
-    Default: subnet-01db466671fdf6c80
+    Default: subnet-0dbc6f3ed73cbec2e
     Description: private subnet2
 
 Resources:
