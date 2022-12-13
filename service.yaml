@@ -7,8 +7,8 @@ metadata:
   name: db
 spec:
   ports:
-  - name: "33060"
-    port: 33060
+  - name: "3306"
+    port: 3306
     targetPort: 3306
   selector:
     service: db
@@ -22,8 +22,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - name: "8000"
-    port: 8000
+  - name: "80"
+    port: 80
     targetPort: 80
   selector:
     service: mediawiki
