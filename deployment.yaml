@@ -57,7 +57,7 @@ spec:
             secretKeyRef:
               name: db-secret
               key: MARIADB_PASSWORD
-        image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/mariadb:latest
+        image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/bhanu-mariadb-repo:latest
         imagePullPolicy: Always
         name: db
         ports:
@@ -83,7 +83,7 @@ spec:
         service: mediawiki
     spec:
       containers:
-      - image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/mediawiki-2:latest
+      - image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/bhanu-mediawiki-repo:latest
         imagePullPolicy: Always
         name: mediawiki
         ports:
