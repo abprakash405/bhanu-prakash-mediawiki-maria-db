@@ -73,10 +73,13 @@ jobs:
         echo "hello world"
         #aws cloudformation create-stack --template-body file://AWS-CFT-Infra-provision.yaml --stack-name BHANU-AWS-EKS-ECR --capabilities CAPABILITY_NAMED_IAM
     
-    - name: eksctl-cmd
+    - name: Eksctl tool installer
       # You may pin to the exact commit or the version.
-      # uses: robatwave/github-action-eksctl@caba58ce9419920c1036f21c1f6c75db20674cc4
-      uses: robatwave/github-action-eksctl@0.1.2        
+      # uses: moia-oss/setup-eksctl@83ec8588193ef06a137ad7d4584549abf81e0d1b
+      uses: moia-oss/setup-eksctl@v1
+      with:
+        # Version of eksctl
+        version: default      
     
     - name: Create EKS ECR
       id: eksctl_create_EKS_ECR
