@@ -37,7 +37,7 @@ spec:
       volumes:
         - name: mnt
           configMap:
-            name: sample_csv_file
+            name: samplecsvfile
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -77,7 +77,7 @@ spec:
       volumes:
         - name: mnt
           configMap:
-            name: sample_csv_file
+            name: samplecsvfile
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -117,4 +117,4 @@ spec:
       volumes:
         - name: mnt
           configMap:
-            name: sample_csv_file
+            name: samplecsvfile
