@@ -136,12 +136,12 @@ jobs:
       #  command: "create namespace ${{ env.NAMESPACE }}"
       #env:
         #EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
-    - name: Run kubectl
-      uses: nikosch86/github-action-eks-kubectl@main
-      with:
-        command: "create configmap samplecsvfile --from-file=samplecsv.csv -n ${{ env.NAMESPACE }}"
-      env:
-        EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
+    #- name: Run kubectl
+      #uses: nikosch86/github-action-eks-kubectl@main
+      #with:
+        #command: "create configmap samplecsvfile --from-file=samplecsv.csv -n ${{ env.NAMESPACE }}"
+      #env:
+        #EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
     - name: Run kubectl
       uses: nikosch86/github-action-eks-kubectl@main
       with:
