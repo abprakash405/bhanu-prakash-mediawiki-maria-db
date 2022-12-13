@@ -73,7 +73,14 @@ jobs:
         
         aws cloudformation create-stack --template-body file://AWS-CFT-Infra-provision.yaml --stack-name BHANU-AWS-EKS-ECR --capabilities CAPABILITY_NAMED_IAM
         
-
+    - name: Wait for 30 minutes to complete AWS CFT
+      # You may pin to the exact commit or the version.
+      # uses: jakejarvis/wait-action@919fc193e07906705e5b7a50f90ea9e74d20b2b0
+      uses: jakejarvis/wait-action@v0.1.1
+      with:
+        # Follows the Linux sleep syntax for time units: a number followed by s for seconds, m for minutes, etc
+        time: 30m
+    
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
