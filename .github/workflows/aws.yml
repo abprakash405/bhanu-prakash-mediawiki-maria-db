@@ -34,12 +34,8 @@ env:
   AWS_REGION: ap-south-1                      # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY1: bhanu-mediawiki-repo       # set this to your Amazon ECR repository name
   ECR_REPOSITORY2: bhanu-mariadb-repo         # set this to your Amazon ECR repository name
-  ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: MY_ECS_CLUSTER                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
-                                              # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: MY_CONTAINER_NAME           # set this to the name of the container in the
-                                              # containerDefinitions section of your task definition
+  EKS_CLUSTER: eks-mediawiki                  # set this to your Amazon EKS cluster name
+  NAMESPACE: replicas-ns                      # set this to your Amazon EKS Namespace
 
 permissions:
   contents: read
@@ -79,17 +75,17 @@ jobs:
     - name: Create EKS ECR
       id: eksctl_create_EKS_ECR
       run: |
-        eksctl create cluster --name eks-mediawiki --region ${{ env.AWS_REGION }}
+        eksctl create cluster --name ${{ env.EKS_CLUSTER }} --region ${{ env.AWS_REGION }}
         aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY1 }} --region ${{ env.AWS_REGION }}
         aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY2 }} --region ${{ env.AWS_REGION }}
     
-    - name: Wait for 30 minutes to complete AWS CFT
+    #- name: Wait for 30 minutes to complete AWS CFT
       # You may pin to the exact commit or the version.
       # uses: jakejarvis/wait-action@919fc193e07906705e5b7a50f90ea9e74d20b2b0
-      uses: jakejarvis/wait-action@v0.1.1
-      with:
+      #uses: jakejarvis/wait-action@v0.1.1
+      #with:
         # Follows the Linux sleep syntax for time units: a number followed by s for seconds, m for minutes, etc
-        time: 30m
+        #time: 30m
     
     - name: Login to Amazon ECR
       id: login-ecr
@@ -127,7 +123,7 @@ jobs:
       with:
         command: "apply -f deployment.yaml"
       env:
-        EKS_CLUSTER: bhanu-eks2
+        EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
     - name: Run kubectl
       uses: nikosch86/github-action-eks-kubectl@main
       with:
@@ -137,18 +133,18 @@ jobs:
     - name: Run kubectl
       uses: nikosch86/github-action-eks-kubectl@main
       with:
-        command: "create namespace replicas-ns"
+        command: "create namespace ${{ env.NAMESPACE }}"
       env:
-        EKS_CLUSTER: bhanu-eks2
+        EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
     - name: Run kubectl
       uses: nikosch86/github-action-eks-kubectl@main
       with:
-        command: "kubectl create configmap sample_csv_file --from-file=samplecsv.csv -n replicas-ns"
+        command: "kubectl create configmap sample_csv_file --from-file=samplecsv.csv -n ${{ env.NAMESPACE }}"
       env:
-        EKS_CLUSTER: bhanu-eks2
+        EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
     - name: Run kubectl
       uses: nikosch86/github-action-eks-kubectl@main
       with:
-        command: "apply -f replica-3pods-deployment.yaml -n replicas-ns"
+        command: "apply -f replica-3pods-deployment.yaml -n ${{ env.NAMESPACE }}"
       env:
-        EKS_CLUSTER: bhanu-eks2
+        EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
