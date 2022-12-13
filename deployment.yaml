@@ -36,34 +36,15 @@ spec:
         service: db
     spec:
       containers:
-      - env:
-        - name: MARIADB_DATABASE
-          valueFrom:
-            configMapKeyRef:
-              key: MARIADB_DATABASE
-              name: env
-        - name: MARIADB_USER
-          valueFrom:
-            configMapKeyRef:
-              key: MARIADB_USER
-              name: env
-        - name: MARIADB_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: MARIADB_ROOT_PASSWORD
-        - name: MARIADB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: MARIADB_PASSWORD
-        image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/bhanu-mariadb-repo:latest
-        imagePullPolicy: Always
-        name: db
-        ports:
-        - containerPort: 3306
-      restartPolicy: Always
-      serviceAccountName: ""
+        - name: db
+          image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/bhanu-mariadb-repo:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3306
+              name: db-port
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: my-password
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -91,4 +72,3 @@ spec:
         resources: {}
       restartPolicy: Always
       serviceAccountName: ""
-      volumes: null
