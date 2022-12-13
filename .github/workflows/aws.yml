@@ -61,25 +61,20 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
-    - name: AWS CLI Installation 
+    - name: AWS CLI and eksctl Installation 
       id: aws_cli_install
       run: |
         sudo apt-get update
         sudo apt-get install awscli -y
+        curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+        sudo mv /tmp/eksctl /usr/local/bin
+
 
     - name: Create AWS Resources using AWS CFT
       id: aws_cft
       run: |
         echo "hello world"
         #aws cloudformation create-stack --template-body file://AWS-CFT-Infra-provision.yaml --stack-name BHANU-AWS-EKS-ECR --capabilities CAPABILITY_NAMED_IAM
-    
-    - name: Eksctl tool installer
-      # You may pin to the exact commit or the version.
-      # uses: moia-oss/setup-eksctl@83ec8588193ef06a137ad7d4584549abf81e0d1b
-      uses: moia-oss/setup-eksctl@v1
-      with:
-        # Version of eksctl
-        version: default      
     
     - name: Create EKS ECR
       id: eksctl_create_EKS_ECR
