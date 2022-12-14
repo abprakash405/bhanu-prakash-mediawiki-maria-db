@@ -142,16 +142,16 @@ jobs:
         #command: "create configmap samplecsvfile --from-file=samplecsv.csv -n ${{ env.NAMESPACE }}"
       #env:
         #EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
-    - name: Deploy 3 replica pods in ${{ env.NAMESPACE }}
+    - name: Deploy 3 replica pods and MariaDB in ${{ env.NAMESPACE }}
       uses: nikosch86/github-action-eks-kubectl@main
       with:
         command: "apply -f replica-3pods-deployment.yaml -n ${{ env.NAMESPACE }}"
       env:
         EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
         
-    - name: Deploy MariaDB in namespace ${{ env.NAMESPACE }}
+    - name: Deploy Services in namespace ${{ env.NAMESPACE }}
       uses: nikosch86/github-action-eks-kubectl@main
       with:
-        command: "apply -f replica-3pods-deployment.yaml -n ${{ env.NAMESPACE }}"
+        command: "apply -f service.yaml -n ${{ env.NAMESPACE }}"
       env:
         EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
