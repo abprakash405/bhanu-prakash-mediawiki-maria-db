@@ -118,3 +118,51 @@ spec:
         - name: mnt
           configMap:
             name: samplecsvfile
+---
+apiVersion: v1
+data:
+  MARIADB_USER: example-user
+  MARIADB_DATABASE: my_wiki
+kind: ConfigMap
+metadata:
+  labels:
+    service: db-env
+  name: env
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+data:
+  MARIADB_ROOT_PASSWORD: bXktc2VjcmV0LXB3Cg==
+  MARIADB_PASSWORD: bXlfY29vbF9zZWNyZXQ=
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: db
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        network/wikinetwork: "true"
+        service: db
+    spec:
+      containers:
+        - name: db
+          image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/bhanu-mariadb-repo:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3306
+              name: db-port
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: my-password
