@@ -30,7 +30,7 @@ $wgMetaNamespace = "Mediawiki-namespace";
 $wgScriptPath = "/mediawiki";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://a3cbfdd5c0cff4d15848454240047dbd-1262683943.ap-south-1.elb.amazonaws.com:8000";
+$wgServer = "http://a3cbfdd5c0cff4d15848454240047dbd-1262683943.ap-south-1.elb.amazonaws.com";
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
@@ -58,8 +58,8 @@ $wgEmailAuthentication = true;
 $wgDBtype = "mysql";
 $wgDBserver = "db.default.svc.cluster.local";
 $wgDBname = "my_wiki";
-$wgDBuser = "wikiuser";
-$wgDBpassword = "database_password";
+$wgDBuser = "root";
+$wgDBpassword = "my-password";
 
 # MySQL specific settings
 $wgDBprefix = "";
@@ -100,14 +100,14 @@ $wgLocaltimezone = "UTC";
 ## be publicly accessible from the web.
 #$wgCacheDirectory = "$IP/cache";
 
-$wgSecretKey = "b0edc28fe84ddd2456fa59e3f1dee72fdf5b4dd9aa4b43c2e3a4712058ce6a79";
+$wgSecretKey = "acc9ab8e5c13120e40cbdfb7ce7aa9b99c8d6ec9c34e44e5c5fc77af984c436c";
 
 # Changing this will log out all existing sessions.
 $wgAuthenticationTokenVersion = "1";
 
 # Site upgrade key. Must be set to a string (default provided) to turn on the
 # web installer while LocalSettings.php is in place
-$wgUpgradeKey = "f06799d5c071c27b";
+$wgUpgradeKey = "7541660f1fe45e67";
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation
