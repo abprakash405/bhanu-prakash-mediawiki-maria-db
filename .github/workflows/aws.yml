@@ -158,7 +158,7 @@ jobs:
     #- name: create configmap localsettingsphp
       #uses: nikosch86/github-action-eks-kubectl@main
       #with:
-        #command: "create configmap localsettingsphp --from-file=LocalSettings.php"
+        #command: "create configmap localsettingsphp --from-file=LocalSettings1.php"
       #env:
         #EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
     #- name: Deploy mediawiki LocalSettings.php vol mount
@@ -170,7 +170,7 @@ jobs:
     #- name: create configmap localsettingsphp in namespace ${{ env.NAMESPACE }}
       #uses: nikosch86/github-action-eks-kubectl@main
       #with:
-        #command: "create configmap localsettingsphp --from-file=LocalSettings.php -n ${{ env.NAMESPACE }}"
+        #command: "create configmap localsettingsphp --from-file=LocalSettings2.php -n ${{ env.NAMESPACE }}"
       #env:
         #EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
     #- name: Deploy mediawiki LocalSettings.php vol mount in namespace ${{ env.NAMESPACE }}
