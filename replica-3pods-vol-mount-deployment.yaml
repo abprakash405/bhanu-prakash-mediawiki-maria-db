@@ -1,0 +1,138 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: mediawiki
+  name: mediawikipoda
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: mediawiki
+  template:
+    metadata:
+      labels:
+        network/wikinetwork: "true"
+        service: mediawiki
+    spec:
+      containers:
+      - image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/bhanu-mediawiki-repo:latest
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "400Mi"
+            cpu: "500m"
+        imagePullPolicy: Always
+        name: mediawiki
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: mnt1
+            mountPath: /var/www/html/mediawiki/docs/
+          - name: mnt
+            mountPath: /var/www/html/mediawiki/LocalSettings.php
+            subPath: LocalSettings.php
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+        - name: mnt1
+          configMap:
+            name: samplecsvfile
+        - name: mnt
+          configMap:
+            name: localsettingsphp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: mediawiki
+  name: mediawikipodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: mediawiki
+  template:
+    metadata:
+      labels:
+        network/wikinetwork: "true"
+        service: mediawiki
+    spec:
+      containers:
+      - image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/bhanu-mediawiki-repo:latest
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "200Mi"
+            cpu: "500m"
+        imagePullPolicy: Always
+        name: mediawiki
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: mnt1
+            mountPath: /var/www/html/mediawiki/docs/
+          - name: mnt
+            mountPath: /var/www/html/mediawiki/LocalSettings.php
+            subPath: LocalSettings.php
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+        - name: mnt1
+          configMap:
+            name: samplecsvfile
+        - name: mnt
+          configMap:
+            name: localsettingsphp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: mediawiki
+  name: mediawikipodc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: mediawiki
+  template:
+    metadata:
+      labels:
+        network/wikinetwork: "true"
+        service: mediawiki
+    spec:
+      containers:
+      - image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/bhanu-mediawiki-repo:latest
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "400Mi"
+            cpu: "500m"
+        imagePullPolicy: Always
+        name: mediawiki
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: mnt1
+            mountPath: /var/www/html/mediawiki/docs/
+          - name: mnt
+            mountPath: /var/www/html/mediawiki/LocalSettings.php
+            subPath: LocalSettings.php
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+        - name: mnt1
+          configMap:
+            name: samplecsvfile
+        - name: mnt
+          configMap:
+            name: localsettingsphp
