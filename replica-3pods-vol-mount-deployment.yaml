@@ -31,7 +31,7 @@ spec:
         - containerPort: 80
         volumeMounts:
           - name: mnt1
-            mountPath: /var/www/html/mediawiki/docs/
+            mountPath: /var/www/html/mediawiki/images/
           - name: mnt
             mountPath: /var/www/html/mediawiki/LocalSettings.php
             subPath: LocalSettings.php
@@ -77,7 +77,7 @@ spec:
         - containerPort: 80
         volumeMounts:
           - name: mnt1
-            mountPath: /var/www/html/mediawiki/docs/
+            mountPath: /var/www/html/mediawiki/images/
           - name: mnt
             mountPath: /var/www/html/mediawiki/LocalSettings.php
             subPath: LocalSettings.php
@@ -123,7 +123,7 @@ spec:
         - containerPort: 80
         volumeMounts:
           - name: mnt1
-            mountPath: /var/www/html/mediawiki/docs/
+            mountPath: /var/www/html/mediawiki/images/
           - name: mnt
             mountPath: /var/www/html/mediawiki/LocalSettings.php
             subPath: LocalSettings.php
