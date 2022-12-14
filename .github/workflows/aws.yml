@@ -155,27 +155,27 @@ jobs:
         command: "apply -f service.yaml -n ${{ env.NAMESPACE }}"
       env:
         EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
-    #- name: create configmap localsettingsphp
-      #uses: nikosch86/github-action-eks-kubectl@main
-      #with:
-        #command: "create configmap localsettingsphp --from-file=LocalSettings1.php"
-      #env:
-        #EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
-    #- name: Deploy mediawiki LocalSettings.php vol mount
-      #uses: nikosch86/github-action-eks-kubectl@main
-      #with:
-        #command: "apply -f mediawiki-vol-mount-deployment.yaml -n ${{ env.NAMESPACE }}"
-      #env:
-        #EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
-    #- name: create configmap localsettingsphp in namespace ${{ env.NAMESPACE }}
-      #uses: nikosch86/github-action-eks-kubectl@main
-      #with:
-        #command: "create configmap localsettingsphp --from-file=LocalSettings2.php -n ${{ env.NAMESPACE }}"
-      #env:
-        #EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
-    #- name: Deploy mediawiki LocalSettings.php vol mount in namespace ${{ env.NAMESPACE }}
-      #uses: nikosch86/github-action-eks-kubectl@main
-      #with:
-        #command: "apply -f replica-3pods-vol-mount-deployment.yaml -n ${{ env.NAMESPACE }}"
-      #env:
-        #EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
+    - name: create configmap localsettingsphp
+      uses: nikosch86/github-action-eks-kubectl@main
+      with:
+        command: "create configmap localsettingsphp --from-file=LocalSettings1.php"
+      env:
+        EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
+    - name: Deploy mediawiki LocalSettings.php vol mount
+      uses: nikosch86/github-action-eks-kubectl@main
+      with:
+        command: "apply -f mediawiki-vol-mount-deployment.yaml -n ${{ env.NAMESPACE }}"
+      env:
+        EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
+    - name: create configmap localsettingsphp in namespace ${{ env.NAMESPACE }}
+      uses: nikosch86/github-action-eks-kubectl@main
+      with:
+        command: "create configmap localsettingsphp --from-file=LocalSettings2.php -n ${{ env.NAMESPACE }}"
+      env:
+        EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
+    - name: Deploy mediawiki LocalSettings.php vol mount in namespace ${{ env.NAMESPACE }}
+      uses: nikosch86/github-action-eks-kubectl@main
+      with:
+        command: "apply -f replica-3pods-vol-mount-deployment.yaml -n ${{ env.NAMESPACE }}"
+      env:
+        EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
