@@ -100,22 +100,22 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY1:latest -f Dockerfile-mediawiki .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY1:latest
+        #docker build -t $ECR_REGISTRY/$ECR_REPOSITORY1:latest -f Dockerfile-mediawiki .
+        #docker push $ECR_REGISTRY/$ECR_REPOSITORY1:latest
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY1:latest" >> $GITHUB_OUTPUT
 
-    - name: Build, tag, and push image to Amazon mariaDB ECR
-      id: build-image-db
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
-      run: |
+    #- name: Build, tag, and push image to Amazon mariaDB ECR
+    #  id: build-image-db
+     # env:
+      #  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+       # IMAGE_TAG: ${{ github.sha }}
+      #run: |
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY2:latest -f Dockerfile-mariaDB .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY2:latest
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY2:latest" >> $GITHUB_OUTPUT
+       # docker build -t $ECR_REGISTRY/$ECR_REPOSITORY2:latest -f Dockerfile-mariaDB .
+        #docker push $ECR_REGISTRY/$ECR_REPOSITORY2:latest
+        #echo "image=$ECR_REGISTRY/$ECR_REPOSITORY2:latest" >> $GITHUB_OUTPUT
 
     - uses: actions/checkout@v2
     - name: Run kubectl
@@ -142,7 +142,14 @@ jobs:
         #command: "create configmap samplecsvfile --from-file=samplecsv.csv -n ${{ env.NAMESPACE }}"
       #env:
         #EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
-    - name: Run kubectl
+    - name: Deploy 3 replica pods in ${{ env.NAMESPACE }}
+      uses: nikosch86/github-action-eks-kubectl@main
+      with:
+        command: "apply -f replica-3pods-deployment.yaml -n ${{ env.NAMESPACE }}"
+      env:
+        EKS_CLUSTER: ${{ env.EKS_CLUSTER }}
+        
+    - name: Deploy MariaDB in namespace ${{ env.NAMESPACE }}
       uses: nikosch86/github-action-eks-kubectl@main
       with:
         command: "apply -f replica-3pods-deployment.yaml -n ${{ env.NAMESPACE }}"
