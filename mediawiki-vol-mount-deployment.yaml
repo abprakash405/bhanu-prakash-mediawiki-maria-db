@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: mediawiki
+  name: mediawiki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: mediawiki
+  template:
+    metadata:
+      labels:
+        network/wikinetwork: "true"
+        service: mediawiki
+    spec:
+      containers:
+      - image: 741856792944.dkr.ecr.ap-south-1.amazonaws.com/bhanu-mediawiki-repo:latest
+        imagePullPolicy: Always
+        name: mediawiki
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+          - name: mnt
+            mountPath: /var/www/html/mediawiki/LocalSettings.php
+            subPath: LocalSettings.php
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+        - name: mnt
+          configMap:
+            name: localsettingsphp
